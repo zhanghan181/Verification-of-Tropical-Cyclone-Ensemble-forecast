@@ -315,6 +315,7 @@ end do
   opt      = True
   opt@fout = "EVO-energy_cnop_"+DEL1+"-fin3norm-init2norm-"+CASE4(case)+"-"+opti_time+"h.txt"
   write_matrix(energy_2,fmtf,opt)
+delete(times)
 do k=mincnop,maxcnop
 kcnop = k
 a = addfile("/public1/home/zhanghan181/perl5/ensemble-members/wrfout-control/wrfout_d01_"+init_time4(case),"r")
