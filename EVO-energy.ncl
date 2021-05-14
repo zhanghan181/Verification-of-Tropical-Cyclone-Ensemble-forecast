@@ -1,5 +1,5 @@
 begin
-filename = "parameter"
+filename = "parameter-ncl"
 CASE = keyword_values( filename, "CASE", "string")  
 NDIX = keyword_values( filename, "NDIX", "integer")  
 NDJX = keyword_values( filename, "NDJX", "integer") 
@@ -73,7 +73,7 @@ do nc=mindel,maxdel
      DEL1=sprintf("%.2f",delta)
      print(DEL1)
 
-do case=0,3,3
+do case=1,0
 
 do k=mincnop,maxcnop
 kcnop = k
@@ -261,7 +261,6 @@ gsres@gsMarkerSizeF=0.08
 gsres@gsMarkerIndex = 15
 gsres@gsMarkerColor  = "GREEN"
 plots(kcnop,it)=wrf_map_overlays(a,wks,(/vector,contour_u,contour_z/),pltres,mpres)
-control                   = asciiread("/public1/home/zhanghan181/perl5/addcnop-masta/3v-0.06-addcnop-plus/exp0/Matsaexp_0.txt", (/1,4/), "double");60km
 ;bTCtext(it)               = gsn_add_polymarker(wks, plots(kcnop,it), tcklon(it),tcklat(it), gsres)
 
 
@@ -284,7 +283,7 @@ control                   = asciiread("/public1/home/zhanghan181/perl5/addcnop-m
 end do
 ; ;---------------------------------------------------------------
 pnlres=True
-pnlres@gsnPanelMainString  = "Higos"
+pnlres@gsnPanelMainString  = CASE4(case)+"cnop"
 pnlres@gsnPanelMainFont ="helvetica"
 pnlres@gsnPanelMainFontHeightF=0.02
 pnlres@gsnPanelScalePlotIndex = 2
@@ -306,16 +305,40 @@ pnlres@gsnPanelXWhiteSpacePercent = 2.
 pnlres@gsnPanelYWhiteSpacePercent = 5.
 pnlres@gsnPanelFigureStrings=(/"00","12h","24h","36h"/)
 gsn_panel(wks,(/plots(kcnop,0),plots(kcnop,2),plots(kcnop,4),plots(kcnop,6)/),(/2,2/),pnlres)
-pnlres@gsnPanelFigureStrings=(/"sen_maxlath","60h","72h","84h"/)
+pnlres@gsnPanelFigureStrings=(/"48h","60h","72h","84h"/)
 gsn_panel(wks,(/plots(kcnop,8),plots(kcnop,10),plots(kcnop,12),plots(kcnop,14)/),(/2,2/),pnlres)
-pnlres@gsnPanelFigureStrings=(/"sen_maxlonh","108h","120h","126h"/)
+pnlres@gsnPanelFigureStrings=(/"96h","108h","120h","126h"/)
 gsn_panel(wks,(/plots(kcnop,16),plots(kcnop,18),plots(kcnop,20)/),(/2,2/),pnlres)
 end do
   fmtf     = "41f30.16"
   opt      = True
-  opt@fout = "EVO-energy_cnop_"+DEL1+"-fin3norm-init2norm-"+CASE4(case)+"-"+opti_time+"h.txt"
+  opt@fout = "/public1/home/zhanghan181/perl5/ensemble-members/EVO-energy/EVO-energy_cnop_"+DEL1+"-fin3norm-init2norm-"+CASE4(case)+"-"+opti_time+"h.txt"
   write_matrix(energy_2,fmtf,opt)
-delete(times)
+delete (times)
+end do
+end do
+end do
+
+do opti=min_opti_time,max_opti_time
+     if(opti.eq.1) then
+       opti_time=6 
+     end if
+     if(opti.eq.2) then
+       opti_time=12 
+     end if
+     if(opti.eq.3) then
+       opti_time=24 
+     end if
+     if(opti.eq.4) then
+       opti_time=36 
+     end if
+do nc=mindel,maxdel
+     delta=nc*DEL  
+     DEL1=sprintf("%.2f",delta)
+     print(DEL1)
+
+do case=0,0
+
 do k=mincnop,maxcnop
 kcnop = k
 a = addfile("/public1/home/zhanghan181/perl5/ensemble-members/wrfout-control/wrfout_d01_"+init_time4(case),"r")
@@ -330,6 +353,7 @@ eTCline   = new((/41,21,4/),graphic)
 ;*********************************
 times    = wrf_user_getvar(b,"times",-1) 
 wmaxtime = dimsizes(times)
+print(times)
 max_u0  =new(17,double)
 WMax   = new(41,double)
 imin   = new(41,integer)
@@ -502,7 +526,6 @@ gsres@gsMarkerSizeF=0.08
 gsres@gsMarkerIndex = 15
 gsres@gsMarkerColor  = "GREEN"
 plots(kcnop,it)=wrf_map_overlays(a,wks,(/vector,contour_u,contour_z/),pltres,mpres)
-control                   = asciiread("/public1/home/zhanghan181/perl5/addcnop-masta/3v-0.06-addcnop-plus/exp0/Matsaexp_0.txt", (/1,4/), "double");60km
 ;bTCtext(it)               = gsn_add_polymarker(wks, plots(kcnop,it), tcklon(it),tcklat(it), gsres)
 
 
@@ -525,7 +548,7 @@ control                   = asciiread("/public1/home/zhanghan181/perl5/addcnop-m
 end do
 ; ;---------------------------------------------------------------
 pnlres=True
-pnlres@gsnPanelMainString  = "Higos"
+pnlres@gsnPanelMainString  = CASE4(case)+"ncnop"
 pnlres@gsnPanelMainFont ="helvetica"
 pnlres@gsnPanelMainFontHeightF=0.02
 pnlres@gsnPanelScalePlotIndex = 2
@@ -547,17 +570,18 @@ pnlres@gsnPanelXWhiteSpacePercent = 2.
 pnlres@gsnPanelYWhiteSpacePercent = 5.
 pnlres@gsnPanelFigureStrings=(/"00","12h","24h","36h"/)
 gsn_panel(wks,(/plots(kcnop,0),plots(kcnop,2),plots(kcnop,4),plots(kcnop,6)/),(/2,2/),pnlres)
-pnlres@gsnPanelFigureStrings=(/"sen_maxlath","60h","72h","84h"/)
+pnlres@gsnPanelFigureStrings=(/"48h","60h","72h","84h"/)
 gsn_panel(wks,(/plots(kcnop,8),plots(kcnop,10),plots(kcnop,12),plots(kcnop,14)/),(/2,2/),pnlres)
-pnlres@gsnPanelFigureStrings=(/"sen_maxlonh","108h","120h","126h"/)
+pnlres@gsnPanelFigureStrings=(/"96h","108h","120h","126h"/)
 gsn_panel(wks,(/plots(kcnop,16),plots(kcnop,18),plots(kcnop,20)/),(/2,2/),pnlres)
 end do
   fmtf     = "41f30.16"
   opt      = True
-  opt@fout = "EVO-energy_ncnop_"+DEL1+"-fin3norm-init2norm-"+CASE4(case)+"-"+opti_time+"h.txt"
+  opt@fout = "/public1/home/zhanghan181/perl5/ensemble-members/EVO-energy/EVO-energy_ncnop_"+DEL1+"-fin3norm-init2norm-"+CASE4(case)+"-"+opti_time+"h.txt"
   write_matrix(energy_2,fmtf,opt)
 delete (times)
 end do
 end do
 end do
 end
+
