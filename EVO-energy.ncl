@@ -80,7 +80,7 @@ kcnop = k
 a = addfile("/public1/home/zhanghan181/perl5/ensemble-members/wrfout-control/wrfout_d01_"+init_time4(case),"r")
 b = addfile("/public1/home/zhanghan181/perl5/ensemble-members/"+CASE4(case)+"/Twrfout_"+DEL1+"-"+k+"-fin3norm-init2norm-"+CASE4(case)+"-"+opti_time+"hd01_"+init_time4(case),"r")
 ;*********************************
-pdfname   = "EVO-energy-"+DEL1+"-"+kcnop+"-fin"+fin_norm+"norm-init"+init_norm+"norm-"+CASE4(case)+"-"+opti_time+"h"
+pdfname   = "/public1/home/zhanghan181/perl5/ensemble-members/EVO-energy/EVO-energy-"+DEL1+"-"+kcnop+"-fin"+fin_norm+"norm-init"+init_norm+"norm-"+CASE4(case)+"-"+opti_time+"h"
 wks       = gsn_open_wks("pdf",pdfname)
 cmap      = read_colormap_file("rainbow");BlueWhiteOrangeRed;precip3_16lev
 cmap(0,:) = (/0,0,0,0/)    ; make first color fully transparent
@@ -344,7 +344,7 @@ kcnop = k
 a = addfile("/public1/home/zhanghan181/perl5/ensemble-members/wrfout-control/wrfout_d01_"+init_time4(case),"r")
 b = addfile("/public1/home/zhanghan181/perl5/ensemble-members/"+CASE4(case)+"/Tncnop_"+DEL1+"-"+k+"-fin3norm-init2norm-"+CASE4(case)+"-"+opti_time+"hd01_"+init_time4(case),"r")
 ;*********************************
-pdfname   = "EVO-energy-ncnop-"+DEL1+"-"+kcnop+"-fin"+fin_norm+"norm-init"+init_norm+"norm-"+CASE4(case)+"-"+opti_time+"h"
+pdfname   = "/public1/home/zhanghan181/perl5/ensemble-members/EVO-energy/EVO-energy-ncnop-"+DEL1+"-"+kcnop+"-fin"+fin_norm+"norm-init"+init_norm+"norm-"+CASE4(case)+"-"+opti_time+"h"
 wks       = gsn_open_wks("pdf",pdfname)
 cmap      = read_colormap_file("rainbow");BlueWhiteOrangeRed;precip3_16lev
 cmap(0,:) = (/0,0,0,0/)    ; make first color fully transparent
